@@ -1,7 +1,7 @@
 package ar.com.logiciel.cptmobile.core.di
 
 import ar.com.logiciel.cptmobile.core.constants.ApiConstants
-import ar.com.logiciel.cptmobile.data.remote.api.AuthApi
+import ar.com.logiciel.cptmobile.data.remote.api.*
 import ar.com.logiciel.cptmobile.data.remote.interceptor.AuthInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -71,5 +71,41 @@ object NetworkModule {
     @Singleton
     fun provideAuthApi(retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideVentasApi(retrofit: Retrofit): VentasApi {
+        return retrofit.create(VentasApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideClientesApi(retrofit: Retrofit): ClientesApi {
+        return retrofit.create(ClientesApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideArticulosApi(retrofit: Retrofit): ArticulosApi {
+        return retrofit.create(ArticulosApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRubrosApi(retrofit: Retrofit): RubrosApi {
+        return retrofit.create(RubrosApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideVendedoresApi(retrofit: Retrofit): VendedoresApi {
+        return retrofit.create(VendedoresApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProveedoresApi(retrofit: Retrofit): ProveedoresApi {
+        return retrofit.create(ProveedoresApi::class.java)
     }
 }

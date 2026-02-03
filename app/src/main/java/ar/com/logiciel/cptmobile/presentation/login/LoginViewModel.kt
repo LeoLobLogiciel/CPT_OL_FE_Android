@@ -14,8 +14,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 data class LoginUiState(
-    val username: String = "",
-    val password: String = "",
+    val username: String = "leolob",
+    val password: String = "cpt1789",
     val isLoading: Boolean = false,
     val error: String? = null,
     val loginSuccess: Boolean = false

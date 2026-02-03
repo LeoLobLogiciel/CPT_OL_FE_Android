@@ -8,6 +8,12 @@ import ar.com.logiciel.cptmobile.presentation.home.HomeScreen
 import ar.com.logiciel.cptmobile.presentation.login.LoginScreen
 import ar.com.logiciel.cptmobile.presentation.splash.SplashScreen
 
+/**
+ * Main navigation graph for the application.
+ * Note: Pedidos, ClientesPanel, Tablero, Ventas, and Profile screens
+ * are all managed within HomeScreen through the navigation drawer.
+ * They don't need separate composable entries in the NavGraph.
+ */
 @Composable
 fun NavGraph(
     navController: NavHostController,

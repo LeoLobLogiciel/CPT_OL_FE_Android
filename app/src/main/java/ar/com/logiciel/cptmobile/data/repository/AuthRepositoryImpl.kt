@@ -21,15 +21,30 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun login(username: String, password: String): NetworkResult<User> {
         return try {
-            Timber.d("Attempting login for user: $username")
+            Timber.d("📡 Llamando a API de login...")
+            Timber.d("Endpoint: POST /auth/login")
+            Timber.d("Request body: { username: \"$username\", password: \"***\" }")
 
             val response = authApi.login(
                 LoginRequest(username = username, password = password)
             )
 
+            Timber.d("📥 Respuesta recibida - HTTP ${response.code()}")
+
             if (response.isSuccessful && response.body() != null) {
                 val loginResponse = response.body()!!
+
+                // Verificar el status de la respuesta
+                if (loginResponse.status == "ERROR") {
+                    Timber.e("❌ API retornó ERROR")
+                    return NetworkResult.Error("Credenciales inválidas")
+                }
+
                 val user = loginResponse.toDomainModel()
+
+                Timber.d("✅ Response exitoso:")
+                Timber.d("   - Status: ${loginResponse.status}")
+                Timber.d("   - Token: ${user.token.take(20)}...")
 
                 // Save user data to preferences
                 preferencesManager.saveUserToken(user.token)
@@ -38,7 +53,7 @@ class AuthRepositoryImpl @Inject constructor(
                 preferencesManager.saveUserName(user.fullName)
                 preferencesManager.setLoggedIn(true)
 
-                Timber.d("Login successful for user: ${user.username}")
+                Timber.d("💾 Datos guardados en DataStore")
                 NetworkResult.Success(user)
             } else {
                 val errorMessage = when (response.code()) {
@@ -46,7 +61,7 @@ class AuthRepositoryImpl @Inject constructor(
                     403 -> "Tu usuario se encuentra temporalmente inactivo. Por favor, contactá a tu supervisor."
                     else -> "Error al iniciar sesión: ${response.message()}"
                 }
-                Timber.e("Login failed: $errorMessage (code: ${response.code()})")
+                Timber.e("❌ Response con error HTTP ${response.code()}: $errorMessage")
                 NetworkResult.Error(errorMessage)
             }
         } catch (e: Exception) {
@@ -57,7 +72,10 @@ class AuthRepositoryImpl @Inject constructor(
                     "Tu usuario se encuentra temporalmente inactivo. Por favor, contactá a tu supervisor."
                 else -> "Error de conexión: ${e.localizedMessage}"
             }
-            Timber.e(e, "Login exception: $errorMessage")
+            Timber.e("💥 Excepción durante login:")
+            Timber.e("   Exception type: ${e.javaClass.simpleName}")
+            Timber.e("   Message: ${e.message}")
+            Timber.e("   Error final: $errorMessage")
             NetworkResult.Error(errorMessage)
         }
     }

@@ -66,11 +66,19 @@ class LoginViewModel @Inject constructor(
                 error = null
             )
 
-            Timber.d("Attempting login for user: $username")
+            Timber.d("═══════════════════════════════════════")
+            Timber.d("🔐 INICIANDO LOGIN")
+            Timber.d("Usuario: $username")
+            Timber.d("═══════════════════════════════════════")
 
             when (val result = loginUseCase(username, password)) {
                 is NetworkResult.Success -> {
-                    Timber.d("Login successful")
+                    Timber.d("═══════════════════════════════════════")
+                    Timber.d("✅ LOGIN EXITOSO")
+                    Timber.d("Usuario: ${result.data?.nombre}")
+                    Timber.d("ID: ${result.data?.id}")
+                    Timber.d("Token guardado correctamente")
+                    Timber.d("═══════════════════════════════════════")
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
                         loginSuccess = true,
@@ -79,7 +87,10 @@ class LoginViewModel @Inject constructor(
                 }
 
                 is NetworkResult.Error -> {
-                    Timber.e("Login failed: ${result.message}")
+                    Timber.e("═══════════════════════════════════════")
+                    Timber.e("❌ LOGIN FALLIDO")
+                    Timber.e("Error: ${result.message}")
+                    Timber.e("═══════════════════════════════════════")
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
                         error = result.message ?: "Error desconocido"

@@ -6,42 +6,27 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class LoginResponse(
-    @Json(name = "AccessToken")
-    val accessToken: String,
+    @Json(name = "status")
+    val status: String,
 
-    @Json(name = "Usuario")
-    val usuario: UsuarioDto? = null
+    @Json(name = "data")
+    val data: LoginData
 )
 
 @JsonClass(generateAdapter = true)
-data class UsuarioDto(
-    @Json(name = "Id")
-    val id: Int,
-
-    @Json(name = "Username")
-    val username: String,
-
-    @Json(name = "Email")
-    val email: String? = null,
-
-    @Json(name = "Nombre")
-    val nombre: String? = null,
-
-    @Json(name = "Apellido")
-    val apellido: String? = null,
-
-    @Json(name = "Activo")
-    val activo: Boolean = true
+data class LoginData(
+    @Json(name = "AccessToken")
+    val accessToken: String
 )
 
 fun LoginResponse.toDomainModel(): User {
     return User(
-        id = usuario?.id ?: 0,
-        username = usuario?.username ?: "",
-        email = usuario?.email,
-        nombre = usuario?.nombre,
-        apellido = usuario?.apellido,
-        token = accessToken,
-        isActive = usuario?.activo ?: true
+        id = 0, // El API no devuelve usuario, solo token
+        username = "", // Lo completaremos después si es necesario
+        email = null,
+        nombre = null,
+        apellido = null,
+        token = data.accessToken,
+        isActive = true
     )
 }

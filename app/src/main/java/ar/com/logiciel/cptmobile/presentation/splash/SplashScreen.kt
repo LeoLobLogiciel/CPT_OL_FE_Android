@@ -44,12 +44,10 @@ fun SplashScreen(
             .background(MaterialTheme.colorScheme.primary),
         contentAlignment = Alignment.Center
     ) {
-        // TODO: Replace with actual CPT logo
-        Icon(
-            imageVector = Icons.Default.Business,
+        Image(
+            painter = painterResource(id = R.drawable.logo_cpt),
             contentDescription = "CPT Logo",
-            modifier = Modifier.size(120.dp),
-            tint = Color.White
+            modifier = Modifier.size(200.dp)
         )
     }
 }

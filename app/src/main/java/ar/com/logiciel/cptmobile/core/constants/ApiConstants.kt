@@ -1,11 +1,12 @@
 package ar.com.logiciel.cptmobile.core.constants
 
-object ApiConstants {
-    // Base URL for emulator - 10.0.2.2 maps to localhost on the host machine
-    const val BASE_URL = "http://10.0.2.2:8080/api/"
+import ar.com.logiciel.cptmobile.BuildConfig
 
-    // For physical device, use your computer's local IP address
-    // const val BASE_URL = "http://192.168.1.XXX:8080/api/"
+object ApiConstants {
+    // Base URL configurada según el build type (debug o release)
+    // Debug: http://10.0.2.2:8080/api/ (emulador apunta a localhost)
+    // Release: https://logiciel.cptoficina.com.ar:8123/api/ (servidor producción)
+    val BASE_URL = BuildConfig.API_BASE_URL
 
     // Authentication headers
     const val HEADER_LSI_PASS = "LSIPass"

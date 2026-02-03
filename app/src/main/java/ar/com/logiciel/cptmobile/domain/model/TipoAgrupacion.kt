@@ -5,12 +5,13 @@ package ar.com.logiciel.cptmobile.domain.model
  */
 enum class TipoAgrupacion(val displayName: String) {
     DETALLE("Detalle"),
+    POR_FECHA("Por fecha"),
+
     POR_CLIENTE("Por cliente"),
     POR_ARTICULO("Por artículo"),
     POR_RUBRO("Por rubro"),
     POR_VENDEDOR("Por vendedor"),
-    POR_PROVEEDOR("Por proveedor"),
-    POR_FECHA("Por fecha");
+    POR_PROVEEDOR("Por proveedor");
 
     companion object {
         fun fromDisplayName(name: String): TipoAgrupacion? {

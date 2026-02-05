@@ -1,3 +1,2 @@
-- Agregado número de versión en pantalla de login
-- Fix SSL Certificate validation
-- Solucionado problema de certificado SSL
+- Agregados símbolos de depuración nativos (debug symbols)
+- Fix configuración NDK para ANRs y crashes

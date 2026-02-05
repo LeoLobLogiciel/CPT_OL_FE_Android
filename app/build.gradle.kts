@@ -18,7 +18,7 @@ android {
         applicationId = "ar.com.logiciel.cptmobile"
         minSdk = 24
         targetSdk = 35
-        versionCode = 7
+        versionCode = 9
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -44,6 +44,9 @@ android {
         }
     }
 
+    // Configuración NDK - símbolos de depuración nativos
+    ndkVersion = "27.0.12077973"
+    
     buildTypes {
         debug {
             isDebuggable = true
@@ -62,7 +65,7 @@ android {
                 "proguard-rules.pro"
             )
             
-            // Generar símbolos de depuración nativos
+            // Símbolos de depuración nativos
             ndk {
                 debugSymbolLevel = "FULL"
             }

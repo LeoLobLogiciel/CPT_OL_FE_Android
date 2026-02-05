@@ -104,8 +104,9 @@ fun HomeScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = viewModel.getCurrentScreenTitle(),
-                                style = MaterialTheme.typography.titleMedium
+                                text = "CPT Mobile",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
                             )
                         }
                     },

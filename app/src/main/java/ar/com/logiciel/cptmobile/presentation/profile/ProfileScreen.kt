@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.SettingsSuggest
 import androidx.compose.material3.AlertDialog
+import ar.com.logiciel.cptmobile.BuildConfig
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Button
@@ -119,12 +120,12 @@ fun ProfileScreen(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = currentUser?.fullName ?: "Usuario",
+                        text = currentUser?.let { "${it.nombre} ${it.apellido}" } ?: "Usuario",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = currentUser?.email ?: "CPT Mobile",
+                        text = currentUser?.email ?: "",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -162,7 +163,7 @@ fun ProfileScreen(
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Text(
-                        text = "1.0.0",
+                        text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

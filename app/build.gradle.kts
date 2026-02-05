@@ -18,7 +18,7 @@ android {
         applicationId = "ar.com.logiciel.cptmobile"
         minSdk = 24
         targetSdk = 35
-        versionCode = 12
+        versionCode = 14
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

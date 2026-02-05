@@ -1,3 +1,3 @@
-- Fix SSL: Vuelto TrustManager para certificados con cadena incompleta
-- El servidor de producción tiene certificado mal configurado
-- Solución temporal hasta que se arregle el servidor
+- UI: Top bar ahora muestra "CPT Mobile" en todas las pantallas
+- UI: Configuración muestra versión completa con build number
+- UI: Configuración muestra nombre del usuario correctamente

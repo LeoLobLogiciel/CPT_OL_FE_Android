@@ -57,6 +57,29 @@ fun VentasFiltrosSheet(
                 }
             }
 
+            // Botones (arriba de todo)
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = onDismiss,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("Cancelar")
+                    }
+                    Button(
+                        onClick = onApply,
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("Aplicar")
+                    }
+                }
+            }
+
             // Fechas
             item {
                 FechasSection(
@@ -144,29 +167,6 @@ fun VentasFiltrosSheet(
                     onProveedorClear = viewModel::clearProveedor
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-            }
-
-            // Botones
-            item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    OutlinedButton(
-                        onClick = onDismiss,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text("Cancelar")
-                    }
-                    Button(
-                        onClick = onApply,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text("Aplicar")
-                    }
-                }
             }
         }
     }

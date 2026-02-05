@@ -241,16 +241,6 @@ fun ProfileScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Acciones Section
-        Text(
-            text = "Acciones",
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(horizontal = 8.dp)
-        )
-
         // Logout Button
         Button(
             onClick = { viewModel.showLogoutDialog() },

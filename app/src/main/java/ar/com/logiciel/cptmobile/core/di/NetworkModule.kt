@@ -49,13 +49,32 @@ object NetworkModule {
         authInterceptor: AuthInterceptor,
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
-        return OkHttpClient.Builder()
+        val builder = OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(ApiConstants.CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(ApiConstants.READ_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(ApiConstants.WRITE_TIMEOUT, TimeUnit.SECONDS)
-            .build()
+        
+        // Configuración SSL segura para producción
+        try {
+            val trustManagerFactory = javax.net.ssl.TrustManagerFactory.getInstance(
+                javax.net.ssl.TrustManagerFactory.getDefaultAlgorithm()
+            )
+            trustManagerFactory.init(null as java.security.KeyStore?)
+            
+            val sslContext = javax.net.ssl.SSLContext.getInstance("TLS")
+            sslContext.init(null, trustManagerFactory.trustManagers, null)
+            
+            builder.sslSocketFactory(
+                sslContext.socketFactory,
+                trustManagerFactory.trustManagers[0] as javax.net.ssl.X509TrustManager
+            )
+        } catch (e: Exception) {
+            Timber.e(e, "Error configurando SSL")
+        }
+        
+        return builder.build()
     }
 
     @Provides

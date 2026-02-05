@@ -1,2 +1,3 @@
-- Agregados símbolos de depuración nativos (debug symbols)
-- Fix configuración NDK para ANRs y crashes
+- Agregado selector de tema (Claro/Oscuro/Sistema) en Configuración
+- Fix: Botones Cancelar/Aplicar movidos arriba en filtros
+- Mejoras en configuración de seguridad SSL

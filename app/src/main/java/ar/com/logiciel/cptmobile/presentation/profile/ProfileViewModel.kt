@@ -2,23 +2,28 @@ package ar.com.logiciel.cptmobile.presentation.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ar.com.logiciel.cptmobile.core.di.ThemeManager
+import ar.com.logiciel.cptmobile.core.di.ThemeMode
 import ar.com.logiciel.cptmobile.domain.model.User
 import ar.com.logiciel.cptmobile.domain.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 /**
  * ViewModel for the Profile/Configuration screen.
- * Handles logout functionality.
+ * Handles logout functionality and theme settings.
  */
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val themeManager: ThemeManager
 ) : ViewModel() {
 
     private val _currentUser = MutableStateFlow<User?>(null)
@@ -29,6 +34,12 @@ class ProfileViewModel @Inject constructor(
 
     private val _isLoggingOut = MutableStateFlow(false)
     val isLoggingOut: StateFlow<Boolean> = _isLoggingOut.asStateFlow()
+
+    val themeMode: StateFlow<ThemeMode> = themeManager.themeMode.stateIn(
+        viewModelScope,
+        started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000),
+        initialValue = ThemeMode.SYSTEM
+    )
 
     init {
         Timber.d("👤 ProfileViewModel initialized")
@@ -41,6 +52,13 @@ class ProfileViewModel @Inject constructor(
                 _currentUser.value = user
                 Timber.d("👤 Current user loaded: ${user?.fullName}")
             }
+        }
+    }
+
+    fun setThemeMode(mode: ThemeMode) {
+        viewModelScope.launch {
+            themeManager.setThemeMode(mode)
+            Timber.d("🎨 Theme mode changed to: $mode")
         }
     }
 

@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.play.publisher)
 }
 
 android {
@@ -17,7 +18,7 @@ android {
         applicationId = "ar.com.logiciel.cptmobile"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
+        versionCode = 7
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -60,6 +61,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            
+            // Generar símbolos de depuración nativos
+            ndk {
+                debugSymbolLevel = "FULL"
+            }
 
             // URL para producción (HTTPS)
             buildConfigField("String", "API_BASE_URL", "\"https://logiciel.cptoficina.com.ar:8123/api/\"")
@@ -85,6 +91,24 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+// Configuración de publicación en Google Play
+play {
+    // El service account JSON
+    serviceAccountCredentials.set(rootProject.file("play-service-account.json"))
+    
+    // Track de publicación (internal, alpha, beta, production)
+    track.set("internal")
+    
+    // Release status - DRAFT para revisar antes de publicar
+    releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.DRAFT)
+    
+    // Actualizar automáticamente la lista de versiones
+    updatePriority.set(2)
+    
+    // Default to release build type
+    defaultToAppBundles.set(true)
 }
 
 dependencies {

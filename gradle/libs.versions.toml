@@ -39,6 +39,9 @@ coil = "2.7.0"
 # Timber (Logging)
 timber = "5.0.1"
 
+# Google Play Publisher
+playPublisher = "3.12.1"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -102,4 +105,5 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version = "2.0.21-1.0.28" }
+play-publisher = { id = "com.github.triplet.play", version.ref = "playPublisher" }
 

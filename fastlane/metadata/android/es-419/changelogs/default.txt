@@ -1,0 +1,3 @@
+- Agregado número de versión en pantalla de login
+- Fix SSL Certificate validation
+- Solucionado problema de certificado SSL

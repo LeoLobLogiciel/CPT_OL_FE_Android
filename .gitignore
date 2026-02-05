@@ -18,3 +18,8 @@ local.properties
 *.keystore
 *.jks
 keystore.properties
+# Google Play Service Account (sensitive)
+play-service-account.json
+keystore.properties
+*.keystore
+app/release/

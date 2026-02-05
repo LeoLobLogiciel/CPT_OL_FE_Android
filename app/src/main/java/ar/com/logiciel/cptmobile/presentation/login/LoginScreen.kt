@@ -51,6 +51,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import ar.com.logiciel.cptmobile.BuildConfig
 import ar.com.logiciel.cptmobile.R
 import ar.com.logiciel.cptmobile.presentation.navigation.Screen
 
@@ -236,6 +237,15 @@ fun LoginScreen(
                     }
                 }
             }
+            
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            // Version number
+            Text(
+                text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.outline
+            )
         }
     }
 }

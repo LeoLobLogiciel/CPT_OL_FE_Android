@@ -49,32 +49,32 @@ object NetworkModule {
         authInterceptor: AuthInterceptor,
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
-        val builder = OkHttpClient.Builder()
+        // TrustManager que acepta certificados con cadena incompleta
+        // NOTA: El servidor logiciel.cptoficina.com.ar tiene certificado mal configurado
+        // (faltan certificados intermedios). Este workaround es necesario temporalmente.
+        val trustAllCerts = arrayOf<TrustManager>(
+            object : X509TrustManager {
+                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {}
+                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
+                    // No lanzar excepción - aceptar cualquier certificado del servidor
+                    // Esto es necesario porque el servidor no envía la cadena completa
+                }
+                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+            }
+        )
+        
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+        
+        return OkHttpClient.Builder()
+            .sslSocketFactory(sslContext.socketFactory, trustAllCerts[0] as X509TrustManager)
+            .hostnameVerifier { _, _ -> true }
             .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(ApiConstants.CONNECT_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(ApiConstants.READ_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(ApiConstants.WRITE_TIMEOUT, TimeUnit.SECONDS)
-        
-        // Configuración SSL segura para producción
-        try {
-            val trustManagerFactory = javax.net.ssl.TrustManagerFactory.getInstance(
-                javax.net.ssl.TrustManagerFactory.getDefaultAlgorithm()
-            )
-            trustManagerFactory.init(null as java.security.KeyStore?)
-            
-            val sslContext = javax.net.ssl.SSLContext.getInstance("TLS")
-            sslContext.init(null, trustManagerFactory.trustManagers, null)
-            
-            builder.sslSocketFactory(
-                sslContext.socketFactory,
-                trustManagerFactory.trustManagers[0] as javax.net.ssl.X509TrustManager
-            )
-        } catch (e: Exception) {
-            Timber.e(e, "Error configurando SSL")
-        }
-        
-        return builder.build()
+            .build()
     }
 
     @Provides

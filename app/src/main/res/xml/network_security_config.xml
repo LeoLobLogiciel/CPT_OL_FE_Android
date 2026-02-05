@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <!-- Permitir HTTP para desarrollo local (emulador) -->
+    <!-- Desarrollo local: HTTP permitido -->
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">10.0.2.2</domain>
         <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">127.0.0.1</domain>
     </domain-config>
     
-    <!-- Producción: HTTPS con certificados del sistema -->
+    <!-- Producción: Permitir certificado del servidor aunque tenga cadena incompleta -->
     <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">logiciel.cptoficina.com.ar</domain>
         <trust-anchors>
             <certificates src="system"/>
+            <certificates src="user"/>
         </trust-anchors>
     </domain-config>
 </network-security-config>

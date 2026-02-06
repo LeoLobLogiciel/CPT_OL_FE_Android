@@ -8,8 +8,8 @@ interface RubrosApi {
 
     /**
      * Obtiene todos los rubros de artículos
-     * Endpoint: GET /articulos_rubros
+     * Endpoint: GET /articulosRubros/getAll
      */
-    @GET("articulos_rubros")
+    @GET("articulosRubros/getAll")
     suspend fun getRubros(): Response<RubrosResponse>
 }

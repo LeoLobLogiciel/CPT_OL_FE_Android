@@ -1,3 +1,6 @@
-- Fix: Buscador de Cliente y Artículo ahora oculta teclado al mostrar resultados
-- Debounce de 1 segundo funcionando correctamente
-- Lista de resultados visible para seleccionar
+- Fix: Nombre de usuario en Configuración (usando fullName)
+- Fix: Endpoints de búsqueda actualizados (getAllByMultipleCriteria/getAll)
+- Clientes: /clientes/getAllByMultipleCriteria
+- Artículos: /articulos/getAllByMultipleCriteria
+- Rubros: /articulosRubros/getAll
+- Vendedores: /vendedores/getAll

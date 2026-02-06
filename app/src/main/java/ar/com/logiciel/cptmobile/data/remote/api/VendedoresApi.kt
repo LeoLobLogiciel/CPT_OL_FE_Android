@@ -8,8 +8,8 @@ interface VendedoresApi {
 
     /**
      * Obtiene todos los vendedores
-     * Endpoint: GET /vendedores
+     * Endpoint: GET /vendedores/getAll
      */
-    @GET("vendedores")
+    @GET("vendedores/getAll")
     suspend fun getVendedores(): Response<VendedoresResponse>
 }

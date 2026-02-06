@@ -9,9 +9,9 @@ interface ArticulosApi {
 
     /**
      * Busca artículos por texto
-     * Endpoint: GET /articulos
+     * Endpoint: GET /articulos/getAllByMultipleCriteria
      */
-    @GET("articulos")
+    @GET("articulos/getAllByMultipleCriteria")
     suspend fun getArticulos(
         @Query("search") search: String
     ): Response<ArticulosResponse>

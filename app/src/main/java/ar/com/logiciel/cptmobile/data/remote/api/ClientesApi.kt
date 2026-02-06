@@ -9,9 +9,9 @@ interface ClientesApi {
 
     /**
      * Busca clientes por texto
-     * Endpoint: GET /clientes
+     * Endpoint: GET /clientes/getAllByMultipleCriteria
      */
-    @GET("clientes")
+    @GET("clientes/getAllByMultipleCriteria")
     suspend fun getClientes(
         @Query("search") search: String
     ): Response<ClientesResponse>

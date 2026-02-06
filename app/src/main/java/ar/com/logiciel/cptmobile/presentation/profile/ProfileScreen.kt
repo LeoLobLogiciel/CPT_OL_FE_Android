@@ -120,7 +120,7 @@ fun ProfileScreen(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = currentUser?.let { "${it.nombre} ${it.apellido}" } ?: "Usuario",
+                        text = currentUser?.fullName ?: "Usuario",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )

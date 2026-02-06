@@ -6,8 +6,8 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class DeudaProveedor(
     @Json(name = "nombre") val nombre: String,
-    @Json(name = "saldo") val saldo: Double,
-    @Json(name = "incidencia") val incidencia: Double
+    @Json(name = "saldo") val saldo: Double?,
+    @Json(name = "incidencia") val incidencia: Double?
 ) {
     val id: String get() = nombre
 }

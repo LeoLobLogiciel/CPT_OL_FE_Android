@@ -45,18 +45,18 @@ data class TableroUiState(
     val totalCantidadWebML: Int get() = ventasWebML.sumOf { it.cantidad }
 
     // Computed properties - Venta por Zona
-    val totalVentasPorZona: Double get() = ventasPorZona.sumOf { it.netoTotalFacturado }
+    val totalVentasPorZona: Double get() = ventasPorZona.sumOf { it.netoTotalFacturado ?: 0.0 }
     val totalClientesNuevos: Int get() = ventasPorZona.sumOf { it.cantidadClientesNuevos }
     val totalClientesAtendidos: Int get() = ventasPorZona.sumOf { it.cantidadClientesAtendidos }
 
     // Computed properties - Deuda Clientes
-    val totalDeudaClientes: Double get() = deudaClientes.sumOf { it.saldoActual }
-    val totalDeudaVencida: Double get() = deudaClientes.sumOf { it.saldoVencido }
+    val totalDeudaClientes: Double get() = deudaClientes.sumOf { it.saldoActual ?: 0.0 }
+    val totalDeudaVencida: Double get() = deudaClientes.sumOf { it.saldoVencido ?: 0.0 }
     val porcentajeDeudaVencida: Double
         get() = if (totalDeudaClientes > 0) (totalDeudaVencida / totalDeudaClientes) * 100 else 0.0
 
     // Computed properties - Deuda Proveedores
-    val totalDeudaProveedores: Double get() = deudaProveedores.sumOf { it.saldo }
+    val totalDeudaProveedores: Double get() = deudaProveedores.sumOf { it.saldo ?: 0.0 }
 
     // Computed properties - Resmas
     val totalStockResmas: Int get() = resmas.sumOf { it.stockActual }

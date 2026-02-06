@@ -56,7 +56,7 @@ fun DeudaProveedoresWidget(
                                 modifier = Modifier.weight(1f)
                             )
                             Text(
-                                text = formatearMoneda(proveedor.saldo),
+                                text = formatearMoneda(proveedor.saldo ?: 0.0),
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold
                             )

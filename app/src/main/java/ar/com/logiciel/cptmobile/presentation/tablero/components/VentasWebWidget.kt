@@ -76,7 +76,7 @@ fun VentasWebWidget(
                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                 StatRow(
                     label = "Web Empresas",
-                    value = formatearMoneda(empresas.netoTotal)
+                    value = formatearMoneda(empresas.netoTotal ?: 0.0)
                 )
                 Text(
                     text = "${empresas.cantidad} pedidos",
@@ -159,7 +159,7 @@ fun VentasWebWidget(
                     ventasWebEmpresas?.let { empresas ->
                         Column {
                             StatRow(label = "Cantidad", value = empresas.cantidad.toString())
-                            StatRow(label = "Neto Total", value = formatearMoneda(empresas.netoTotal))
+                            StatRow(label = "Neto Total", value = formatearMoneda(empresas.netoTotal ?: 0.0))
                         }
                     } ?: Text(
                         text = "No hay datos de empresas",

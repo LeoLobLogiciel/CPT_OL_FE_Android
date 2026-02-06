@@ -77,7 +77,7 @@ fun VentasPorZonaWidget(
                     // Gráfico de sectores simplificado
                     if (ventasPorZona.isNotEmpty()) {
                         SimplePieChart(
-                            data = ventasPorZona.map { it.nombreGrupo to it.netoTotalFacturado },
+                            data = ventasPorZona.map { it.nombreGrupo to (it.netoTotalFacturado ?: 0.0) },
                             modifier = Modifier.fillMaxWidth()
                         )
                     } else {
@@ -155,12 +155,12 @@ private fun HorizontalScrollTable(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(zona.nombreGrupo, modifier = Modifier.width(120.dp))
-                Text(formatearMoneda(zona.netoTotalFacturado), modifier = Modifier.width(100.dp))
-                Text(String.format("%.0f", zona.porcentajeIncidencia), modifier = Modifier.width(40.dp))
+                Text(formatearMoneda(zona.netoTotalFacturado ?: 0.0), modifier = Modifier.width(100.dp))
+                Text(String.format("%.0f", zona.porcentajeIncidencia ?: 0.0), modifier = Modifier.width(40.dp))
                 Text(zona.cantidadClientesNuevos.toString(), modifier = Modifier.width(60.dp))
                 Text(zona.cantidadClientesAtendidos.toString(), modifier = Modifier.width(70.dp))
-                Text(formatearMoneda(zona.ticketPromedio), modifier = Modifier.width(100.dp))
-                Text("${zona.margenLogicielPromedio}%", modifier = Modifier.width(60.dp))
+                Text(formatearMoneda(zona.ticketPromedio ?: 0.0), modifier = Modifier.width(100.dp))
+                Text("${zona.margenLogicielPromedio ?: "0"}%", modifier = Modifier.width(60.dp))
             }
         }
         
@@ -180,7 +180,7 @@ private fun HorizontalScrollTable(
             Text(totalClientesAtendidos.toString(), fontWeight = FontWeight.Bold, modifier = Modifier.width(70.dp))
             val avgTicket = if (totalClientesAtendidos > 0) totalVentas / totalClientesAtendidos else 0.0
             Text(formatearMoneda(avgTicket), fontWeight = FontWeight.Bold, modifier = Modifier.width(100.dp))
-            val avgMargen = ventasPorZona.map { it.margenLogicielPromedio.toDoubleOrNull() ?: 0.0 }.average()
+            val avgMargen = ventasPorZona.map { it.margenLogicielPromedio?.toDoubleOrNull() ?: 0.0 }.average()
             Text(String.format("%.0f%%", avgMargen), fontWeight = FontWeight.Bold, modifier = Modifier.width(60.dp))
         }
     }

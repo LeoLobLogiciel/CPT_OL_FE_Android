@@ -6,10 +6,10 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class DeudaClientesPorZona(
     @Json(name = "nombreGrupo") val nombreGrupo: String,
-    @Json(name = "saldoActual") val saldoActual: Double,
-    @Json(name = "saldoVencido") val saldoVencido: Double,
-    @Json(name = "chequesVigentes") val chequesVigentes: Double,
-    @Json(name = "promedioPagos") val promedioPagos: Double,
+    @Json(name = "saldoActual") val saldoActual: Double?,
+    @Json(name = "saldoVencido") val saldoVencido: Double?,
+    @Json(name = "chequesVigentes") val chequesVigentes: Double?,
+    @Json(name = "promedioPagos") val promedioPagos: Double?,
     @Json(name = "porcentajeVencido") val porcentajeVencido: Double?
 ) {
     val id: String get() = nombreGrupo

@@ -39,7 +39,7 @@ object NetworkModule {
         return HttpLoggingInterceptor { message ->
             Timber.tag("OkHttp").d(message)
         }.apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = HttpLoggingInterceptor.Level.BASIC
         }
     }
 

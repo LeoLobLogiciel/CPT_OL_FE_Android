@@ -25,7 +25,7 @@ data class VentasWebMLResponse(
 @JsonClass(generateAdapter = true)
 data class VentasWebEmpresas(
     @Json(name = "cantidad") val cantidadString: String,
-    @Json(name = "netoTotal") val netoTotal: Double
+    @Json(name = "netoTotal") val netoTotal: Double?
 ) {
     val cantidad: Int get() = cantidadString.toIntOrNull() ?: 0
 }

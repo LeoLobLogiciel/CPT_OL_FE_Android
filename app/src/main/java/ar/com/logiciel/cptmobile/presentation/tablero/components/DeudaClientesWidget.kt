@@ -62,7 +62,7 @@ fun DeudaClientesWidget(
                 0 -> {
                     if (deudaClientes.isNotEmpty()) {
                         SimplePieChart(
-                            data = deudaClientes.map { it.nombreGrupo to it.saldoActual },
+                            data = deudaClientes.map { it.nombreGrupo to (it.saldoActual ?: 0.0) },
                             modifier = Modifier.fillMaxWidth()
                         )
                     } else {
@@ -118,11 +118,11 @@ private fun DeudaClientesTable(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(zona.nombreGrupo, modifier = Modifier.width(120.dp))
-                Text(formatearMoneda(zona.saldoActual), modifier = Modifier.width(100.dp))
-                Text(formatearMoneda(zona.saldoVencido), modifier = Modifier.width(100.dp))
+                Text(formatearMoneda(zona.saldoActual ?: 0.0), modifier = Modifier.width(100.dp))
+                Text(formatearMoneda(zona.saldoVencido ?: 0.0), modifier = Modifier.width(100.dp))
                 Text(String.format("%.2f", zona.porcentajeVencido ?: 0.0), modifier = Modifier.width(50.dp))
-                Text(formatearMoneda(zona.chequesVigentes), modifier = Modifier.width(100.dp))
-                Text(String.format("%.0f", zona.promedioPagos * 100), modifier = Modifier.width(80.dp))
+                Text(formatearMoneda(zona.chequesVigentes ?: 0.0), modifier = Modifier.width(100.dp))
+                Text(String.format("%.0f", (zona.promedioPagos ?: 0.0) * 100), modifier = Modifier.width(80.dp))
             }
         }
         
@@ -137,9 +137,9 @@ private fun DeudaClientesTable(
             Text(formatearMoneda(totalDeuda), fontWeight = FontWeight.Bold, modifier = Modifier.width(100.dp))
             Text(formatearMoneda(totalVencida), fontWeight = FontWeight.Bold, modifier = Modifier.width(100.dp))
             Text(String.format("%.0f", porcentajeVencida), fontWeight = FontWeight.Bold, modifier = Modifier.width(50.dp))
-            val totalCheques = deudaClientes.sumOf { it.chequesVigentes }
+            val totalCheques = deudaClientes.sumOf { it.chequesVigentes ?: 0.0 }
             Text(formatearMoneda(totalCheques), fontWeight = FontWeight.Bold, modifier = Modifier.width(100.dp))
-            val avgPagos = deudaClientes.map { it.promedioPagos }.average()
+            val avgPagos = deudaClientes.map { it.promedioPagos ?: 0.0 }.average()
             Text(String.format("%.0f", avgPagos * 100), fontWeight = FontWeight.Bold, modifier = Modifier.width(80.dp))
         }
     }

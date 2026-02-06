@@ -33,7 +33,7 @@ fun VentasPorRubroWidget(
     var showDateFilter by remember { mutableStateOf(false) }
     var selectedTab by remember { mutableIntStateOf(0) }
     
-    val totalVentas = ventasPorRubro.sumOf { it.totalVentas }
+    val totalVentas = ventasPorRubro.sumOf { it.totalVentas ?: 0.0 }
     
     WidgetCard(
         title = "Venta por rubro",
@@ -81,7 +81,7 @@ fun VentasPorRubroWidget(
                                 fontWeight = FontWeight.Bold
                             )
                             SimplePieChart(
-                                data = ventasPorRubro.take(6).map { it.rubroNombre to it.totalVentas },
+                                data = ventasPorRubro.take(6).map { it.rubroNombre to (it.totalVentas ?: 0.0) },
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
@@ -94,7 +94,7 @@ fun VentasPorRubroWidget(
                                 fontWeight = FontWeight.Bold
                             )
                             SimplePieChart(
-                                data = ventaMLPorRubro.map { it.rubroNombre to it.totalVentas },
+                                data = ventaMLPorRubro.map { it.rubroNombre to (it.totalVentas ?: 0.0) },
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
@@ -148,14 +148,14 @@ private fun RubroTable(ventasPorRubro: List<VentaPorRubro>, totalVentas: Double)
         HorizontalDivider()
         
         ventasPorRubro.forEach { rubro ->
-            val incidencia = if (totalVentas > 0) (rubro.totalVentas / totalVentas) * 100 else 0.0
+            val incidencia = if (totalVentas > 0) ((rubro.totalVentas ?: 0.0) / totalVentas) * 100 else 0.0
             Row(
                 modifier = Modifier.padding(vertical = 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(rubro.rubroNombre, modifier = Modifier.width(150.dp))
-                Text(formatearMoneda(rubro.totalVentas), modifier = Modifier.width(110.dp))
-                Text(rubro.margenTotalLogiciel, modifier = Modifier.width(70.dp))
+                Text(formatearMoneda(rubro.totalVentas ?: 0.0), modifier = Modifier.width(110.dp))
+                Text(rubro.margenTotalLogiciel ?: "0", modifier = Modifier.width(70.dp))
                 Text(String.format("%.2f", incidencia), modifier = Modifier.width(60.dp))
             }
         }
@@ -169,7 +169,7 @@ private fun RubroTable(ventasPorRubro: List<VentaPorRubro>, totalVentas: Double)
         ) {
             Text("Total:", fontWeight = FontWeight.Bold, modifier = Modifier.width(150.dp))
             Text(formatearMoneda(totalVentas), fontWeight = FontWeight.Bold, modifier = Modifier.width(110.dp))
-            val avgMargen = ventasPorRubro.map { it.margenTotalLogiciel.toDoubleOrNull() ?: 0.0 }.average()
+            val avgMargen = ventasPorRubro.map { it.margenTotalLogiciel?.toDoubleOrNull() ?: 0.0 }.average()
             Text(String.format("%.0f", avgMargen), fontWeight = FontWeight.Bold, modifier = Modifier.width(70.dp))
         }
     }

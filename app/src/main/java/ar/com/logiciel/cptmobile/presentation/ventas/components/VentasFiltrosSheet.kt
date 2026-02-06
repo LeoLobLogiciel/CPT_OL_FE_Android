@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -33,7 +35,8 @@ fun VentasFiltrosSheet(
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        modifier = modifier
+        modifier = modifier,
+        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ) {
         LazyColumn(
             modifier = Modifier
@@ -527,11 +530,19 @@ private fun RubrosSection(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                if (rubrosSeleccionados.isNotEmpty()) {
-                    Text(
-                        text = "(${rubrosSeleccionados.size})",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (rubrosSeleccionados.isNotEmpty()) {
+                        Text(
+                            text = "(${rubrosSeleccionados.size})",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
+                    Icon(
+                        imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                        contentDescription = if (expanded) "Cerrar" else "Abrir",
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -572,6 +583,19 @@ private fun RubrosSection(
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(text = rubro.nombre)
                     }
+                }
+                
+                // Botón para cerrar
+                TextButton(
+                    onClick = { expanded = false },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowUp,
+                        contentDescription = "Cerrar"
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("Cerrar")
                 }
             }
         }

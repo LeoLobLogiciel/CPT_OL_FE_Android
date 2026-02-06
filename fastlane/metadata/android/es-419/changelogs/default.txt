@@ -1,6 +1,4 @@
-- Fix: Nombre de usuario en Configuración (usando fullName)
-- Fix: Endpoints de búsqueda actualizados (getAllByMultipleCriteria/getAll)
-- Clientes: /clientes/getAllByMultipleCriteria
-- Artículos: /articulos/getAllByMultipleCriteria
-- Rubros: /articulosRubros/getAll
-- Vendedores: /vendedores/getAll
+- UI: Modal de filtros ahora se abre completo (no a la mitad)
+- UI: Agregado botón para cerrar sección de Rubros
+- UI: Agregado ícono indicador en header de Rubros (expandir/colapsar)
+- Fix: Teclado se oculta al tocar resultado de búsqueda

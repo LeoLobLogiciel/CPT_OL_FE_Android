@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ar.com.logiciel.cptmobile.domain.model.*
@@ -324,6 +325,15 @@ private fun ClienteSection(
     onClienteSelect: (Cliente) -> Unit,
     onClienteClear: () -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
+    
+    // Ocultar teclado cuando llegan resultados después del debounce
+    LaunchedEffect(clientesEncontrados, isLoadingClientes) {
+        if (clientesEncontrados.isNotEmpty() && !isLoadingClientes) {
+            focusManager.clearFocus()
+        }
+    }
+    
     Text(
         text = "Cliente",
         style = MaterialTheme.typography.titleMedium,
@@ -378,7 +388,10 @@ private fun ClienteSection(
         // Lista de clientes encontrados (máximo 5)
         clientesEncontrados.take(5).forEach { cliente ->
             TextButton(
-                onClick = { onClienteSelect(cliente) },
+                onClick = { 
+                    focusManager.clearFocus()
+                    onClienteSelect(cliente) 
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
@@ -400,6 +413,15 @@ private fun ArticuloSection(
     onArticuloSelect: (Articulo) -> Unit,
     onArticuloClear: () -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
+    
+    // Ocultar teclado cuando llegan resultados después del debounce
+    LaunchedEffect(articulosEncontrados, isLoadingArticulos) {
+        if (articulosEncontrados.isNotEmpty() && !isLoadingArticulos) {
+            focusManager.clearFocus()
+        }
+    }
+    
     Text(
         text = "Artículo",
         style = MaterialTheme.typography.titleMedium,
@@ -460,7 +482,10 @@ private fun ArticuloSection(
         // Lista de artículos encontrados (máximo 5)
         articulosEncontrados.take(5).forEach { articulo ->
             TextButton(
-                onClick = { onArticuloSelect(articulo) },
+                onClick = { 
+                    focusManager.clearFocus()
+                    onArticuloSelect(articulo) 
+                },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(modifier = Modifier.fillMaxWidth()) {

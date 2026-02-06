@@ -137,4 +137,10 @@ object NetworkModule {
     fun providePedidosApi(retrofit: Retrofit): PedidosApi {
         return retrofit.create(PedidosApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideTableroApi(retrofit: Retrofit): TableroApi {
+        return retrofit.create(TableroApi::class.java)
+    }
 }

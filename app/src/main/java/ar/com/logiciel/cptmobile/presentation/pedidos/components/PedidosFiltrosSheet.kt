@@ -111,10 +111,9 @@ fun PedidosFiltrosSheet(
                     )
                 }
                 
-                // Vendedor
+                // Vendedor - Colapsable
                 item {
-                    FiltroSectionTitle("Vendedor")
-                    VendedorSection(
+                    VendedorSectionColapsable(
                         vendedores = uiState.vendedoresFiltrados,
                         search = uiState.searchVendedor,
                         selectedId = uiState.idVendedor,
@@ -123,10 +122,9 @@ fun PedidosFiltrosSheet(
                     )
                 }
                 
-                // Rubros
+                // Rubros - Colapsable
                 item {
-                    FiltroSectionTitle("Rubros")
-                    RubrosSection(
+                    RubrosSectionColapsable(
                         rubros = uiState.rubrosFiltrados,
                         selectedIds = uiState.idArticulosRubros,
                         search = uiState.searchRubro,
@@ -204,7 +202,7 @@ private fun FechasSection(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // Fecha Desde - Clickable correctamente implementado
+        // Fecha Desde
         OutlinedTextField(
             value = fechaDesde.format(formatter),
             onValueChange = {},
@@ -222,7 +220,7 @@ private fun FechasSection(
                 .clickable { showDesdePicker = true }
         )
         
-        // Fecha Hasta - Clickable correctamente implementado
+        // Fecha Hasta
         OutlinedTextField(
             value = fechaHasta.format(formatter),
             onValueChange = {},
@@ -360,103 +358,186 @@ private fun ClienteSection(
 }
 
 @Composable
-private fun VendedorSection(
+private fun VendedorSectionColapsable(
     vendedores: List<Vendedor>,
     search: String,
     selectedId: Int?,
     onSearchChange: (String) -> Unit,
     onSelect: (Vendedor?) -> Unit
 ) {
-    OutlinedTextField(
-        value = search,
-        onValueChange = onSearchChange,
-        label = { Text("Buscar vendedor...") },
-        trailingIcon = {
-            Icon(Icons.Default.Search, "Buscar")
-        },
-        modifier = Modifier.fillMaxWidth()
-    )
+    var expanded by remember { mutableStateOf(false) }
+    val selectedNombre = vendedores.find { it.id == selectedId }?.nombre ?: "Todos"
     
-    val vendedoresFiltrados = if (search.isEmpty()) {
-        vendedores
-    } else {
-        vendedores.filter { it.nombre.contains(search, ignoreCase = true) }
-    }
-    
-    Column {
-        ListItem(
-            headlineContent = { Text("Todos los vendedores") },
-            leadingContent = {
-                RadioButton(
-                    selected = selectedId == null,
-                    onClick = { onSelect(null) }
-                )
-            },
-            modifier = Modifier.clickable { onSelect(null) }
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+            .clickable { expanded = !expanded },
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
         )
-        
-        vendedoresFiltrados.take(10).forEach { vendedor ->
-            ListItem(
-                headlineContent = { Text(vendedor.nombre) },
-                leadingContent = {
-                    RadioButton(
-                        selected = selectedId == vendedor.id,
-                        onClick = { onSelect(vendedor) }
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = "Vendedor",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
                     )
-                },
-                modifier = Modifier.clickable { onSelect(vendedor) }
-            )
+                    Text(
+                        text = selectedNombre,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                Icon(
+                    imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                    contentDescription = if (expanded) "Colapsar" else "Expandir"
+                )
+            }
+            
+            if (expanded) {
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                OutlinedTextField(
+                    value = search,
+                    onValueChange = onSearchChange,
+                    label = { Text("Buscar...") },
+                    trailingIcon = {
+                        Icon(Icons.Default.Search, "Buscar")
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                
+                val vendedoresFiltrados = if (search.isEmpty()) {
+                    vendedores
+                } else {
+                    vendedores.filter { it.nombre.contains(search, ignoreCase = true) }
+                }
+                
+                Column {
+                    ListItem(
+                        headlineContent = { Text("Todos los vendedores") },
+                        leadingContent = {
+                            RadioButton(
+                                selected = selectedId == null,
+                                onClick = { onSelect(null) }
+                            )
+                        },
+                        modifier = Modifier.clickable { onSelect(null) }
+                    )
+                    
+                    vendedoresFiltrados.take(8).forEach { vendedor ->
+                        ListItem(
+                            headlineContent = { Text(vendedor.nombre) },
+                            leadingContent = {
+                                RadioButton(
+                                    selected = selectedId == vendedor.id,
+                                    onClick = { onSelect(vendedor) }
+                                )
+                            },
+                            modifier = Modifier.clickable { onSelect(vendedor) }
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
-private fun RubrosSection(
+private fun RubrosSectionColapsable(
     rubros: List<Rubro>,
     selectedIds: List<Int>,
     search: String,
     onSearchChange: (String) -> Unit,
     onToggle: (Rubro) -> Unit
 ) {
-    OutlinedTextField(
-        value = search,
-        onValueChange = onSearchChange,
-        label = { Text("Buscar rubro...") },
-        trailingIcon = {
-            Icon(Icons.Default.Search, "Buscar")
-        },
-        modifier = Modifier.fillMaxWidth()
-    )
-    
-    val rubrosFiltrados = if (search.isEmpty()) {
-        rubros
+    var expanded by remember { mutableStateOf(false) }
+    val selectedText = if (selectedIds.isEmpty()) {
+        "Todos"
     } else {
-        rubros.filter { it.nombre.contains(search, ignoreCase = true) }
+        "${selectedIds.size} seleccionado(s)"
     }
     
-    Column {
-        rubrosFiltrados.take(8).forEach { rubro ->
-            val isSelected = selectedIds.contains(rubro.id)
-            ListItem(
-                headlineContent = { Text(rubro.nombre) },
-                leadingContent = {
-                    Checkbox(
-                        checked = isSelected,
-                        onCheckedChange = { onToggle(rubro) }
-                    )
-                },
-                modifier = Modifier.clickable { onToggle(rubro) }
-            )
-        }
-    }
-    
-    if (selectedIds.isNotEmpty()) {
-        Text(
-            text = "${selectedIds.size} rubro(s) seleccionado(s)",
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(top = 4.dp)
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+            .clickable { expanded = !expanded },
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
         )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = "Rubros",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = selectedText,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                Icon(
+                    imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                    contentDescription = if (expanded) "Colapsar" else "Expandir"
+                )
+            }
+            
+            if (expanded) {
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                OutlinedTextField(
+                    value = search,
+                    onValueChange = onSearchChange,
+                    label = { Text("Buscar...") },
+                    trailingIcon = {
+                        Icon(Icons.Default.Search, "Buscar")
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                
+                val rubrosFiltrados = if (search.isEmpty()) {
+                    rubros
+                } else {
+                    rubros.filter { it.nombre.contains(search, ignoreCase = true) }
+                }
+                
+                Column {
+                    rubrosFiltrados.take(10).forEach { rubro ->
+                        val isSelected = selectedIds.contains(rubro.id)
+                        ListItem(
+                            headlineContent = { Text(rubro.nombre) },
+                            leadingContent = {
+                                Checkbox(
+                                    checked = isSelected,
+                                    onCheckedChange = { onToggle(rubro) }
+                                )
+                            },
+                            modifier = Modifier.clickable { onToggle(rubro) }
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 

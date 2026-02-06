@@ -1,2 +1,1 @@
-- UI: Logo de CPT en top bar agrandado al doble (80dp)
-- Fix: Configuración muestra solo el nombre (no email)
+- Test: Publicación automática a pruebas internas

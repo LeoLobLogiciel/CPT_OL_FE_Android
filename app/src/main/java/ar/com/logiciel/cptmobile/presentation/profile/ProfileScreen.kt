@@ -120,16 +120,10 @@ fun ProfileScreen(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = currentUser?.fullName ?: "Usuario",
+                        text = currentUser?.let { "${it.nombre.orEmpty()} ${it.apellido.orEmpty()}".trim() } 
+                            ?: "Usuario",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = currentUser?.email?.takeIf { it.isNotBlank() } 
-                            ?: currentUser?.username 
-                            ?: "",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }

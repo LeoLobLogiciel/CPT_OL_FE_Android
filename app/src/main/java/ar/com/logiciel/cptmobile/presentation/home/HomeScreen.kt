@@ -109,7 +109,7 @@ fun HomeScreen(
                             Image(
                                 painter = painterResource(id = R.drawable.logo_cpt),
                                 contentDescription = "CPT Mobile",
-                                modifier = Modifier.size(40.dp)
+                                modifier = Modifier.size(80.dp)
                             )
                         }
                     },

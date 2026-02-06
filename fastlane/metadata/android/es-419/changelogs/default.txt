@@ -1,2 +1,2 @@
-- UI: Top bar ahora muestra logo de CPT en lugar de texto
-- Fix: Configuración muestra email o username si email está vacío
+- UI: Logo de CPT en top bar agrandado al doble (80dp)
+- Fix: Configuración muestra solo el nombre (no email)

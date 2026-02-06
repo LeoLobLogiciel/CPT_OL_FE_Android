@@ -161,7 +161,7 @@ fun HomeScreen(
 
                 // Content based on selected menu item
                 when (selectedMenuItem) {
-                    MenuItem.PedidosPanel -> PedidosScreen()
+                    MenuItem.PedidosPanel -> PedidosScreen(onNavigateBack = { scope.launch { drawerState.open() } })
                     MenuItem.ClientesPanel -> ClientesPanelScreen()
                     MenuItem.ClientesTablero -> TableroScreen()
                     MenuItem.ClientesVentas -> VentasScreen()

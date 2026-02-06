@@ -53,4 +53,10 @@ abstract class RepositoryModule {
     abstract fun bindProveedoresRepository(
         proveedoresRepositoryImpl: ProveedoresRepositoryImpl
     ): ProveedoresRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindPedidosRepository(
+        pedidosRepositoryImpl: PedidosRepositoryImpl
+    ): PedidosRepository
 }

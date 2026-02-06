@@ -131,4 +131,10 @@ object NetworkModule {
     fun provideProveedoresApi(retrofit: Retrofit): ProveedoresApi {
         return retrofit.create(ProveedoresApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun providePedidosApi(retrofit: Retrofit): PedidosApi {
+        return retrofit.create(PedidosApi::class.java)
+    }
 }

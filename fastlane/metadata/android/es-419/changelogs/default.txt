@@ -1,4 +1,2 @@
-- UI: Modal de filtros ahora se abre completo (no a la mitad)
-- UI: Agregado botón para cerrar sección de Rubros
-- UI: Agregado ícono indicador en header de Rubros (expandir/colapsar)
-- Fix: Teclado se oculta al tocar resultado de búsqueda
+- UI: Top bar ahora muestra logo de CPT en lugar de texto
+- Fix: Configuración muestra email o username si email está vacío

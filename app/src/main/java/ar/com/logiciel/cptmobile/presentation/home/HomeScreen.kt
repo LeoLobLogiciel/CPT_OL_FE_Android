@@ -1,5 +1,6 @@
 package ar.com.logiciel.cptmobile.presentation.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +10,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.ui.res.painterResource
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -34,6 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import ar.com.logiciel.cptmobile.R
 import ar.com.logiciel.cptmobile.presentation.clientes.ClientesPanelScreen
 import ar.com.logiciel.cptmobile.presentation.home.components.NavigationDrawerContent
 import ar.com.logiciel.cptmobile.presentation.navigation.Screen
@@ -103,10 +106,10 @@ fun HomeScreen(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
-                            Text(
-                                text = "CPT Mobile",
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+                            Image(
+                                painter = painterResource(id = R.drawable.logo_cpt),
+                                contentDescription = "CPT Mobile",
+                                modifier = Modifier.size(40.dp)
                             )
                         }
                     },

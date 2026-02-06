@@ -125,7 +125,9 @@ fun ProfileScreen(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = currentUser?.email ?: "",
+                        text = currentUser?.email?.takeIf { it.isNotBlank() } 
+                            ?: currentUser?.username 
+                            ?: "",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

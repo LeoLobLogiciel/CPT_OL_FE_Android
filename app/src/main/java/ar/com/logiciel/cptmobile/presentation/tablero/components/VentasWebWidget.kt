@@ -112,7 +112,7 @@ fun VentasWebWidget(
                     // Gráfico de barras simplificado
                     if (ventasWebML.isNotEmpty()) {
                         SimpleBarChart(
-                            data = ventasWebML.take(10).map { 
+                            data = ventasWebML.map { 
                                 val fecha = it.fechaCreacion?.substring(5) ?: ""
                                 val valor = it.netoTotalValue
                                 fecha to valor
@@ -129,8 +129,10 @@ fun VentasWebWidget(
                 }
                 1 -> {
                     // Tabla ML
-                    Column {
-                        ventasWebML.take(10).forEach { venta ->
+                    Column(
+                        modifier = Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState())
+                    ) {
+                        ventasWebML.forEach { venta ->
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
